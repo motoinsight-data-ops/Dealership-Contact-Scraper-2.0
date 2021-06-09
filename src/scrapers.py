@@ -189,11 +189,24 @@ def scraper_Common(driver, url):
 
     staffEmailsAvailable = False
     if staffPageAvailable:
-        staffEmailsAvailable = checkForEmail(driver, url)
+        staffEmailsAvailable = get_staff_contact_common(driver, url)
     
     result['Staff Contact'] = staffEmailsAvailable
     
     return result
+
+
+def get_element_text(element):
+    resultList = []
+
+    child_elements = element.find_elements(By.XPATH, './/*')
+
+    for element in child_elements:
+        if '>' not in element.get_attribute('innerHTML') and '<' not in element.get_attribute('innerHTML') and element.get_attribute('innerHTML') != '':
+            if(len(element.get_attribute('innerHTML')) > 5) and element.get_attribute('innerHTML').replace(' ', '').isalpha():
+                resultList.append(element.get_attribute('innerHTML').lower().replace('\n', '').strip())
+
+    return resultList
 
 
 def get_staff_contact_common(driver, url):
@@ -203,7 +216,7 @@ def get_staff_contact_common(driver, url):
 
     STAFF_TILE_CONTENT_WHITELIST = ['yui','staff', 'member', 'employee', 'col-', 'team']
 
-    STAFF_TILE_CONTENT_BLACKLIST = ['wrapper', 'name', 'img', 'image']
+    STAFF_TILE_CONTENT_BLACKLIST = ['wrapper', 'name', 'img', 'image', 'hide']
 
     TITLE_WHITELIST = ['service', 'finance', 'general', 'new', 'used', 'internet', 'parts', 'sales', 'wholesale', 'client', 'owner', 'executive', 'bdc', 'rental', 'tech', 'consultant', 'certified', 'assistant']
 
@@ -240,14 +253,18 @@ def get_staff_contact_common(driver, url):
                 tempEmployeeContact = {'name': None, 'position': None, 'email': None, 'phone': None}
                 # print("Found employee tile: " , employeeCard.get_attribute('innerHTML'))
                 outerHTML = employeeCard.get_attribute('outerHTML').lower()
-                txt = employeeCard.text.lower()
-                l = txt.split('\n')
-                # print(l)
-                print(txt)
-                quit
+                # txt = employeeCard.text.lower()
+                # l = txt.split('\n')
+
+                l = get_element_text(employeeCard)
+                print(l)
+
 
                 name = l[0]
-                title = l[1]
+                try:
+                    title = l[1]
+                except:
+                    title = 'FIND MANUALLY'
                 try:
                     email = re.search(EMAILPATTERN, outerHTML).group()
                 except:
@@ -275,7 +292,7 @@ def get_staff_contact_common(driver, url):
 
                 # Check if name contains one of the title keywords. If so, reverse name and title as they were in opposite orders as specified.
                 
-                tempEmployeeContact['name'] = name
+                tempEmployeeContact['name'] = name.replace('\n', '')
                 tempEmployeeContact['position'] = title
 
                 if any(keyWord in name.lower() for keyWord in TITLE_WHITELIST):

@@ -50,7 +50,7 @@ driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
 urlList = [URL1, URL2, URL3, URL4]
 
 # result = scraper_Common(driver, 'https://www.harrismitsubishi.com')
-url = 'https://www.adanissan.com/MeetOurDepartments'
+url = 'https://www.amesnissan.com/dealership/staff.htm'
 # result = scraper_dealerOn(driver, 'https://www.andymohravonnissan.com')
 driver.get(url)
 result = get_staff_contact_common(driver, url)

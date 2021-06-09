@@ -128,34 +128,34 @@ class ContactScraper:
 
 
             provider = str(row['Site Provider']).lower()
-            print("Provider: "+ provider)
+            # print("Provider: "+ provider)
             print("Page: ", cur, " / ", numRows)
-            if provider == 'dealer.com':
-                result = scraper_dealerDotCom(self.driver, url)
+            # if provider == 'dealer.com':
+            #     result = scraper_dealerDotCom(self.driver, url)
             
-            elif provider == 'dealerinspire':
-                result = scraper_dealerInspire(self.driver, url)
+            # elif provider == 'dealerinspire':
+            #     result = scraper_dealerInspire(self.driver, url)
             
-            elif provider == 'dealerfire':
-                result = scraper_dealerFire(self.driver, url)
+            # elif provider == 'dealerfire':
+            #     result = scraper_dealerFire(self.driver, url)
 
-            elif provider == 'dealeron':
-                result = scraper_dealerOn(self.driver, url)
+            # elif provider == 'dealeron':
+            #     result = scraper_dealerOn(self.driver, url)
             
             # elif provider == 'dealereprocess':
             #     result = scraper_dealerEprocess(self.driver, url)
             
             # If none of the previous site providers, a general scraper will be used to check if there is a staff page on the sitemap or not. 
             # Knowing if a page has a staff page or not will be useful when scraping manually later as we will know whether its worth it to look for one or not.
-            else:
-                result = scraper_Common(self.driver, url)
-
+            # else:
+            #     result = scraper_Common(self.driver, url)
+            result = scraper_Common(self.driver, url)
             # result = scraper_Common(self.driver, url)
             
-            if provider == 'dealervenom':
-                # result = {'Staff Page': True/False, 'Sales': 519-123-1234, 'Staff Contact': True/False}
-                result['Staff Page'] = 'Check Manually.'
-                result['Staff Contact'] = 'Check Manually'
+            # if provider == 'dealervenom':
+            #     # result = {'Staff Page': True/False, 'Sales': 519-123-1234, 'Staff Contact': True/False}
+            #     result['Staff Page'] = 'Check Manually.'
+            #     result['Staff Contact'] = 'Check Manually'
 
             # Format of result JSON / Python Dictionary: result = {Staff Page: True/False, Sales: 519-123-1234, Staff Contact: True/False}
             

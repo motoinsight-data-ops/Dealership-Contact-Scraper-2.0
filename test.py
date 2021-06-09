@@ -24,3 +24,6 @@ print('----------')
 for keyword in STAFF_TILE_CONTENT_WHITELIST:
     if keyword in txt:
         print(keyword)
+
+
+print(("john smith").isalpha())
