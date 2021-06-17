@@ -16,7 +16,7 @@ Outputs contact information of staff in list of JSON (Python Dictionairy)
 in the form of a string. 
 ------------------------------------------------------------------------
 Author: Andrei Secara & Naftal Kerecha - Data & Automation
-Updated: May 18, 2021
+Updated: June 17, 2021
 ------------------------------------------------------------------------
 Notes:
 - To use this program, you must navigate to ./src and type in python run.py

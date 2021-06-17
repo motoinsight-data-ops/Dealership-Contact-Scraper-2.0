@@ -199,7 +199,21 @@ def scraper_Common(driver, url):
 def hasNumbers(inputString):
     return any(char.isdigit() for char in inputString)
 
+
 def get_element_text(element):
+    """
+    -------------------------------------------------------
+    Scans an element's inner elements inner HTML to find inner HTML that does not contain < or >,
+    signifying that it contains displayable text. Usually, the name and title are the first two to appear in the order.
+    -------------------------------------------------------
+    Args: 
+    element: Web Driver Element
+        
+    Returns: 
+        A list of inner HTML elements that do not contain < or >, with some other extra fine tuning parameters.
+            
+    ------------------------------------------------------
+    """
     resultList = []
 
     child_elements = element.find_elements(By.XPATH, './/*')
