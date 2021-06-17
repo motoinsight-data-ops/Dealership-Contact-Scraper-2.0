@@ -196,6 +196,9 @@ def scraper_Common(driver, url):
     return result
 
 
+def hasNumbers(inputString):
+    return any(char.isdigit() for char in inputString)
+
 def get_element_text(element):
     resultList = []
 
@@ -203,8 +206,9 @@ def get_element_text(element):
 
     for element in child_elements:
         if '>' not in element.get_attribute('innerHTML') and '<' not in element.get_attribute('innerHTML') and element.get_attribute('innerHTML') != '':
-            if(len(element.get_attribute('innerHTML')) > 5) and element.get_attribute('innerHTML').replace(' ', '').isalpha():
-                resultList.append(element.get_attribute('innerHTML').lower().replace('\n', '').strip())
+            if(len(element.get_attribute('innerHTML')) > 5) and not hasNumbers(element.get_attribute('innerHTML')):
+                if 'email' not in element.get_attribute('innerHTML').lower():
+                    resultList.append(element.get_attribute('innerHTML').lower().replace('\n', '').strip())
 
     return resultList
 
@@ -218,7 +222,7 @@ def get_staff_contact_common(driver, url):
 
     STAFF_TILE_CONTENT_BLACKLIST = ['wrapper', 'name', 'img', 'image', 'hide']
 
-    TITLE_WHITELIST = ['service', 'finance', 'general', 'new', 'used', 'internet', 'parts', 'sales', 'wholesale', 'client', 'owner', 'executive', 'bdc', 'rental', 'tech', 'consultant', 'certified', 'assistant']
+    TITLE_WHITELIST = ['dealer', 'principal', 'manager', 'service', 'managing', 'partner' 'finance', 'general', 'new', 'used', 'internet', 'parts', 'sales', 'wholesale', 'client', 'owner', 'executive', 'bdc', 'rental', 'tech', 'consultant', 'certified', 'assistant']
 
     try:
         # Get all elements
@@ -296,6 +300,7 @@ def get_staff_contact_common(driver, url):
                 tempEmployeeContact['position'] = title
 
                 if any(keyWord in name.lower() for keyWord in TITLE_WHITELIST):
+                    print("found keyword")
                     tempEmployeeContact['name'] = title
                     tempEmployeeContact['position'] = name
 

@@ -158,29 +158,49 @@ def get_staff_contact_koonsVolvo(driver, url):
         staffList = []
         for element in all_elements:
             try:
-                if element.get_attribute('class') == 'yui3-u-1-6 staff':
+                if element.get_attribute('itemprop') == 'employee':
                     staffList.append(element)
                     # print('\n',element.text,'\n')
             except:
                 continue
         # staffList = driver.find_elements_by_class_name('staff-card col-md-4 col-sm-6')
-        # print("StaffList: ", staffList)
+        print("StaffList: ", len(staffList))
         for employeeCard in staffList:
             try:
                 tempEmployeeContact = {'name': None, 'position': None, 'email': None, 'phone': None}
                 # print("Found employee tile: " , employeeCard.get_attribute('innerHTML'))
                 txt = employeeCard.text
+                HTMLtext = employeeCard.get_attribute('outerHTML').lower()
+                # print(txt)
                 l = txt.split('\n')
+                print(l)
+                # name = txt.split(' ')[0] + ' ' + txt.split(' ')[1]
+                # title = None
 
-                name = l[0]
-                title = l[1]
+                ## When itemprop is employee
+                name = employeeCard.find_element(By.XPATH, './/div[1]/div[1]/div[1]/h4/span[1]').get_attribute('innerHTML') + " " + employeeCard.find_element(By.XPATH, './/div[1]/div[1]/div[1]/h4/span[2]').get_attribute('innerHTML')
+                title = employeeCard.find_element(By.XPATH, './/div[1]/div[1]/div[1]/p').get_attribute('innerHTML')
+
+                # When all text is visible
+                # name = l[0]
+                # title = l[1]
+                
+
+                ## When class is staff-info__text-wrap
+                # name = employeeCard.find_element(By.XPATH, './/div[2]/div').get_attribute('innerHTML')
+                # title = employeeCard.find_element(By.XPATH, './/div[3]').get_attribute('innerHTML')
+
+                # name = employeeCard.find_element(By.XPATH, './/div/div/div[2]/div[2]/div[1]/h3').get_attribute('innerHTML')
+                # title = employeeCard.find_element(By.XPATH, './/div/div/div[2]/div[2]/div[1]/span').get_attribute('innerHTML')
+
+
                 try:
-                    email = re.search(EMAILPATTERN, txt).group()
+                    email = re.search(EMAILPATTERN, HTMLtext).group()
                 except:
                     email = None
 
                 try:
-                    phone = re.search(PHONEPATTERN, txt).group()
+                    phone = re.search(PHONEPATTERN, HTMLtext).group()
                 except:
                     phone = None
 
@@ -199,8 +219,15 @@ def get_staff_contact_koonsVolvo(driver, url):
                 
                 tempEmployeeContact['name'] = name
                 tempEmployeeContact['position'] = title
-                tempEmployeeContact['email'] = email.replace("mailto:", "")
-                tempEmployeeContact['phone'] = phone.replace("tel:", '')
+                try:
+                    tempEmployeeContact['email'] = email.replace("mailto:", "")
+                except:
+                    tempEmployeeContact['email'] = None
+                
+                try:
+                    tempEmployeeContact['phone'] = phone.replace("tel:", '')
+                except:
+                    tempEmployeeContact['phone'] = None
                 # print('\n Name: ', name, ' title: ', title, ' email: ', email, ' phone: ',phone, '\n')
                 resultList.append(deepcopy(tempEmployeeContact))
             except Exception as e:
@@ -446,14 +473,7 @@ def get_staff_contact_findlayVolvoCars(driver, url):
                 tempEmployeeContact = {'name': None, 'position': None, 'email': None, 'phone': None}
                 # print("Found employee tile: " , employeeCard.get_attribute('innerHTML'))
                 
-
-
-                try:
-                    email = employeeCard.find_element(By.CLASS_NAME, 'email').get_attribute('innerHTML')
-                except:
-                    email = None
-
-
+                htmlTEXT = employeeCard.get_attribute('outerHTML').lower()
 
                 try:
                     name = employeeCard.text
@@ -461,7 +481,12 @@ def get_staff_contact_findlayVolvoCars(driver, url):
                     name = None
                 
                 try:
-                    phone = employeeCard.find_element(By.CLASS_NAME, 'phone').get_attribute('innerHTML')
+                    email = re.search(EMAILPATTERN, htmlTEXT).group()
+                except:
+                    email = None
+
+                try:
+                    phone = re.search(PHONEPATTERN, htmlTEXT).group()
                 except:
                     phone = None
                 
@@ -585,10 +610,11 @@ def get_staff_contact_danburyVolvo(driver, url):
     try:
         # Get all elements
         all_elements = driver.find_elements(By.XPATH, './/*')
+        print("Len of all elements: ", len(all_elements))
         staffList = []
         for element in all_elements:
             try:
-                if 'staff-item' in element.get_attribute('class'):
+                if 'employee' in element.get_attribute("itemprop"):
                     staffList.append(element)
                     # print('\n',element.text,'\n')
             except:
@@ -893,7 +919,7 @@ def get_staff_contact_whiteBearMitsu(driver, url):
         staffList = []
         for element in all_elements:
             try:
-                if element.get_attribute('class') == 'yui3-u-1-6 staff':
+                if element.get_attribute('class') == 'col-sm-3 employee-container':
                     staffList.append(element)
                     # print('\n',element.text,'\n')
             except:
@@ -905,17 +931,19 @@ def get_staff_contact_whiteBearMitsu(driver, url):
                 tempEmployeeContact = {'name': None, 'position': None, 'email': None, 'phone': None}
                 # print("Found employee tile: " , employeeCard.get_attribute('innerHTML'))
                 l = employeeCard.text.split('\n')
+                HTMLtext = employeeCard.get_attribute('outerHTML')
                 # print(l)
                 # name = l[0]
                 # title = l[1]
-                name = employeeCard.find_element(By.XPATH, './/dl/dt/a').get_attribute('name')
+                name = employeeCard.find_element(By.XPATH, './/dl/dt/a').get_attribute('innerHTML')
                 title = employeeCard.find_element(By.XPATH, './/dl/dd[1]').get_attribute('innerHTML')
                 try:
-                    email = employeeCard.find_element(By.XPATH, './/dl/dd[3]').get_attribute('innerHTML')
+                    email = re.search(EMAILPATTERN, HTMLtext).group()
                 except:
                     email = None
+
                 try:
-                    phone = employeeCard.find_element(By.XPATH, './/dl/dd[4]').get_attribute('innerHTML')
+                    phone = re.search(PHONEPATTERN, HTMLtext).group()
                 except:
                     phone = None
                 

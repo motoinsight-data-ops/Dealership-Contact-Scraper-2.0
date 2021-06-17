@@ -40,16 +40,16 @@ options = webdriver.ChromeOptions()
 options.add_experimental_option('excludeSwitches', ['enable-logging'])
 driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
 
-url = 'https://www.claycooleymitsubishiofarlington.com/about-us/mitsubishi-team/'
+url = 'https://www.youngbloodnissan.com/dealership/staff.htm'
 
 
 
 driver.get(url)
-# time.sleep(6)
+time.sleep(5)
 
-result = get_staff_contact_danburyVolvo(driver, url)
-# yu13 = northfieldvolvo
-# yui3 with no text for contact = whitebear
+result = get_staff_contact_findlayVolvoCars(driver, url)
+
+# yui3 with no text for contact = findlay
 # 
 
 # result = scraper_dealerOn(driver, 'https://www.andymohravonnissan.com')

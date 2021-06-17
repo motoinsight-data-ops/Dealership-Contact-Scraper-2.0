@@ -97,10 +97,13 @@ class ContactScraper:
         return
 
     def saveRow(self, url, staffPage, salesContactNumber, staffContactList):
-        with open(self.tempSaveFileLocation, 'a+') as saveFile:
-            output_writer = csv.writer(saveFile, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL, lineterminator='\n')
-            # Append one line containing the following information
-            output_writer.writerow([url, staffPage, salesContactNumber, staffContactList])
+        try:
+            with open(self.tempSaveFileLocation, 'a+') as saveFile:
+                output_writer = csv.writer(saveFile, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL, lineterminator='\n')
+                # Append one line containing the following information
+                output_writer.writerow([url, staffPage, salesContactNumber, staffContactList])
+        except:
+            return
         return
 
 
