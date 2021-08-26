@@ -219,7 +219,7 @@ def get_element_text(element):
     child_elements = element.find_elements(By.XPATH, './/*')
 
     for element in child_elements:
-        if '>' not in element.get_attribute('innerHTML') and '<' not in element.get_attribute('innerHTML') and element.get_attribute('innerHTML') != '':
+        if '!' not in element.get_attribute('innerHTML') and '>' not in element.get_attribute('innerHTML') and '<' not in element.get_attribute('innerHTML') and element.get_attribute('innerHTML') != '':
             if(len(element.get_attribute('innerHTML')) > 5) and not hasNumbers(element.get_attribute('innerHTML')):
                 if 'email' not in element.get_attribute('innerHTML').lower():
                     resultList.append(element.get_attribute('innerHTML').lower().replace('\n', '').strip())
@@ -267,22 +267,44 @@ def get_staff_contact_common(driver, url):
         # staffList = driver.find_elements_by_class_name('staff-card col-md-4 col-sm-6')
         # print("StaffList: ", staffList)
         for employeeCard in staffList:
+            
+            tempEmployeeContact = {'name': None, 'position': None, 'email': None, 'phone': None}
+            outerHTML = employeeCard.get_attribute('outerHTML').lower()
+
             try:
-                tempEmployeeContact = {'name': None, 'position': None, 'email': None, 'phone': None}
-                # print("Found employee tile: " , employeeCard.get_attribute('innerHTML'))
-                outerHTML = employeeCard.get_attribute('outerHTML').lower()
-                # txt = employeeCard.text.lower()
-                # l = txt.split('\n')
+                if staff_tile_class_name == 'yui3-u-1-6 staff':
+                    try:
+                        name = employeeCard.find_element(By.XPATH, './/dl/dt/a').get_attribute('name')
+                    except:
+                        name = employeeCard.find_element(By.XPATH, './/dl/dt').get_attribute('innerHTML') 
+                    try:
+                        title = employeeCard.find_element(By.XPATH, './/dl/dt/a/span').get_attribute('innerHTML')
+                    except:
+                        try:
+                            title = employeeCard.find_element(By.XPATH, './/dl/dt/a/br').get_attribute('innerHTML')
+                        except:
+                            title = employeeCard.find_element(By.XPATH, './/dl/dd[1]').get_attribute('innerHTML')
 
-                l = get_element_text(employeeCard)
-                print(l)
+                
+                else:
+                    
+                    # print("Found employee tile: " , employeeCard.get_attribute('innerHTML'))
+                    
+                    # txt = employeeCard.text.lower()
+                    # l = txt.split('\n')
+
+                    l = get_element_text(employeeCard)
+                    print(l)
 
 
-                name = l[0]
-                try:
-                    title = l[1]
-                except:
-                    title = 'FIND MANUALLY'
+                    name = l[0]
+
+                    try:
+                        title = l[1]
+                    except:
+                        title = 'FIND MANUALLY'
+
+                
                 try:
                     email = re.search(EMAILPATTERN, outerHTML).group()
                 except:

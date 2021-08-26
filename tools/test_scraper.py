@@ -40,14 +40,14 @@ options = webdriver.ChromeOptions()
 options.add_experimental_option('excludeSwitches', ['enable-logging'])
 driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
 
-url = 'https://www.youngbloodnissan.com/dealership/staff.htm'
+url = 'https://www.nissanofwichitafalls.com/meet-our-staff.htm'
 
 
 
 driver.get(url)
-time.sleep(5)
+time.sleep(4)
 
-result = get_staff_contact_findlayVolvoCars(driver, url)
+result = get_staff_contact_koonsVolvo(driver, url)
 
 # yui3 with no text for contact = findlay
 # 

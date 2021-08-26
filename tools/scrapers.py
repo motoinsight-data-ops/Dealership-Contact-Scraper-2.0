@@ -158,7 +158,7 @@ def get_staff_contact_koonsVolvo(driver, url):
         staffList = []
         for element in all_elements:
             try:
-                if element.get_attribute('itemprop') == 'employee':
+                if element.get_attribute('height') == 'height: 315px;':
                     staffList.append(element)
                     # print('\n',element.text,'\n')
             except:
@@ -178,20 +178,20 @@ def get_staff_contact_koonsVolvo(driver, url):
                 # title = None
 
                 ## When itemprop is employee
-                name = employeeCard.find_element(By.XPATH, './/div[1]/div[1]/div[1]/h4/span[1]').get_attribute('innerHTML') + " " + employeeCard.find_element(By.XPATH, './/div[1]/div[1]/div[1]/h4/span[2]').get_attribute('innerHTML')
-                title = employeeCard.find_element(By.XPATH, './/div[1]/div[1]/div[1]/p').get_attribute('innerHTML')
+                # name = employeeCard.find_element(By.XPATH, './/div[1]/div[1]/div[1]/h4/span[1]').get_attribute('innerHTML') + " " + employeeCard.find_element(By.XPATH, './/div[1]/div[1]/div[1]/h4/span[2]').get_attribute('innerHTML')
+                # title = employeeCard.find_element(By.XPATH, './/div[1]/div[1]/div[1]/p').get_attribute('innerHTML')
 
                 # When all text is visible
-                # name = l[0]
-                # title = l[1]
+                name = l[0]
+                title = l[1]
                 
 
                 ## When class is staff-info__text-wrap
                 # name = employeeCard.find_element(By.XPATH, './/div[2]/div').get_attribute('innerHTML')
                 # title = employeeCard.find_element(By.XPATH, './/div[3]').get_attribute('innerHTML')
 
-                # name = employeeCard.find_element(By.XPATH, './/div/div/div[2]/div[2]/div[1]/h3').get_attribute('innerHTML')
-                # title = employeeCard.find_element(By.XPATH, './/div/div/div[2]/div[2]/div[1]/span').get_attribute('innerHTML')
+                # name = employeeCard.find_element(By.XPATH, './/dl/dt/a').get_attribute('name')
+                # title = employeeCard.find_element(By.XPATH, './/dl/dt/a/span').get_attribute('innerHTML')
 
 
                 try:
