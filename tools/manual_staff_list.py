@@ -3,21 +3,34 @@
 Very niche tool used to convert manually created staff contact spreadsheets into 
 a list of JSON string format.
 
-To use, populate a spreadsheet with dealership contact info in the following format:
+To use, populate a spreadsheet with contact info in the following format:
 
 Name        Title           Email           Phone
 John F.     President       jfk@gmail.com   123-456-7890
 ...         ...             ...             ...
 ...         ...             ...             ...
 
-Then, run this file and select your spreadsheet as an input.
-** Make sure to put that spreadsheet in ../Manual Staff Contacts beforehand
+(for single dealership - convertToJSONString)
 
-It will then output a string in the correct format to input into the appropriate column
-of the OEM input sheet.
+Or in following format:
+
+Store No.   Dealership      Name            Title           Email           Phone
+05125       President Volvo John F.         President       jfk@gmail.com   123-456-7890
+...         ...             ...             ...             ...             ...
+...         ...             ...             ...             ...             ...
+
+(for multiple dealerships - convertToJSONStrings)
+
+Then, run this file and select your spreadsheet as an input.
+** Make sure to put that spreadsheet in /../Manual Staff Contacts beforehand
+
+It will then output (or create a txt file) with string(s) in the correct format
+to input into the appropriate column(s) of the OEM input sheet.
 ------------------------------------------------------------------------
-Author: Andrei Secara - Data & Automation
-Updated: 2020-12-14
+Authors:
+    Andrei Secara - Data & Automation
+    Kelvin Kellner - Data & Automation
+Updated: 2021-10-26
 ------------------------------------------------------------------------
 Notes:
 

@@ -4,7 +4,7 @@ Takes the files from other scripts and merges them with the preferred
 formatting for dealer prospects as of the date of creating this script.
 ------------------------------------------------------------------------
 Authors: Kelvin Kellner & Jiten Aylani
-Updated: 2021-10-06
+Updated: 2021-10-26
 ------------------------------------------------------------------------
 Note: The script takes care of 90% of the work, look over the new_format
 file and correct any mistakes, then save finished copy into new_final.

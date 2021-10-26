@@ -21,7 +21,7 @@ cs.readFromExcel()
 cs.contactScraper()
 
 # Save updated dataframe containing site providers to excel
-# cs.saveToExcel()
+cs.saveToExcel()
 
 # Quit driver and exit program
 cs.teardown_method()

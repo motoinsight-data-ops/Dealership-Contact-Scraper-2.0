@@ -2,7 +2,7 @@
 ------------------------------------------------------------------------
 Removes junk content from the scraped sheets.
 ------------------------------------------------------------------------
-Author: Andrei Secara - Data & Automation
+Authors: Andrei Secara & Kelvin Kellner
 Updated: 2020-12-14
 ------------------------------------------------------------------------
 Notes:

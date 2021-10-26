@@ -1,3 +1,10 @@
+"""
+Incomplete script.
+Was intending to pull Google search queries to an .xlsx file,
+but was no longer needed.
+Feel free to modify and use this if it helps you!
+"""
+
 import requests
 import urllib
 import pandas as pd

@@ -1,20 +1,19 @@
 import pandas as pd
 from copy import deepcopy
 import os
-import re
 import csv
 
-OUTPUTFILEDIR = '../formatted_csv/'
+OUTPUTFILEDIR = '/../formatted_csv/'
 
 excel_file = ''
 
 def readFromExcel():
     print("Type in the name of the spreadsheet you want to domain check: \n")
 
-    print(os.listdir("../spreadsheets"))
+    print(os.listdir("/../spreadsheets"))
 
     excel_file_name = input("File name: ")
-    excel_file_path = "../spreadsheets/" + excel_file_name
+    excel_file_path = "/../spreadsheets/" + excel_file_name
 
     global excel_file
     excel_file = excel_file_name
