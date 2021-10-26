@@ -5,11 +5,16 @@ Visits a list dealership websites and attempts to scrapes contact information fr
 ## How to Use
 
 1. Place the input .xlsx file containing dealership URLs and other info into /spreadsheets.
-2. Navigate to /src and run "run.py", follow instructions to select the appropriate file and begin scraping. The script takes about a minute per dealership (may vary), so prepare device usage accordingly, and take precautions to prevent overheating or crashing if possible/necessary.
-3. If the script does crash for whatever reason, progress is dumped into a file in /save with the same name as the input file, you can add an additional column titled "Scrape" to the input file with a value of "TRUE" or "FALSE" for each dealership as to whether or not you want the script to scrape that dealership's website. Results from multiple runs can be combined manually if needed.
-4. When your output file is prepared, navigate to /tools and run "clean_data.py", this script will do basic cleaning of the ouptut file from /spreadsheets and export to /cleaned.
-5. Next, still in /tools, run "new_format.py" and follow instructions to create the final prospecting list using the file in /cleaned and exporting to /new_format.
-6. Look over the file in /new_format, if there are any errors please fix them in the file in /cleaned and restart from Step 5. The "manual_staff_list.py" file can help create staff lists if any dealerships are incorrectly missing data. When the file in /new_format looks perfect at last, copy it into /new_format_final and you are done!
+
+3. Navigate to /src and run "run.py", follow instructions to select the appropriate file and begin scraping. The script takes about a minute per dealership (may vary), so prepare device usage accordingly, and take precautions to prevent overheating or crashing if possible/necessary.
+
+5. If the script does crash for whatever reason, progress is dumped into a file in /save with the same name as the input file, you can add an additional column titled "Scrape" to the input file with a value of "TRUE" or "FALSE" for each dealership as to whether or not you want the script to scrape that dealership's website. Results from multiple runs can be combined manually if needed.
+
+6. When your output file is prepared, navigate to /tools and run "clean_data.py", this script will do basic cleaning of the ouptut file from /spreadsheets and export to /cleaned.
+
+7. Next, still in /tools, run "new_format.py" and follow instructions to create the final prospecting list using the file in /cleaned and exporting to /new_format.
+
+8. Look over the file in /new_format, if there are any errors please fix them in the file in /cleaned and restart from Step 5. The "manual_staff_list.py" file can help create staff lists if any dealerships are incorrectly missing data. When the file in /new_format looks perfect at last, copy it into /new_format_final and you are done!
 
 ## Descriptions of Files and Folders
 
