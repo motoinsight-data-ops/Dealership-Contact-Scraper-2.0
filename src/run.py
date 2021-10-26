@@ -15,13 +15,13 @@ cs = ContactScraper()
 cs.setup_method()
 
 # Read data from excel into dc
-# cs.readFromExcel()
+cs.readFromExcel()
 
 # Scrape contact info from URL list generated in readFromExcel()
-# cs.contactScraper()
+cs.contactScraper()
 
 # Save updated dataframe containing site providers to excel
 # cs.saveToExcel()
 
 # Quit driver and exit program
-# cs.teardown_method()
+cs.teardown_method()

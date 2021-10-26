@@ -4,6 +4,8 @@ import os
 import re
 import csv
 
+OUTPUTFILEDIR = '../formatted_csv/'
+
 excel_file = ''
 
 def readFromExcel():
@@ -60,7 +62,7 @@ def formatData(df):
 
 
 def output_to_csv(employee_contact_list_formatted):
-    d = '../formatted_csv/' + excel_file
+    d = OUTPUTFILEDIR + excel_file
     d.replace('.xlsx', '.csv')
     # Open csv file or create one if not there. Also overwrites any existing files with the same name.
     print()

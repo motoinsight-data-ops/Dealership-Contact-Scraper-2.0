@@ -6,6 +6,8 @@ import pandas as pd
 import os
 import csv
 
+CWD = os.path.dirname(os.path.realpath(__file__))
+
 
 """
 ------------------------------------------------------------------------
@@ -55,6 +57,8 @@ CAPTCHA ERROR - Could not get into the site because of a captcha blocking the bo
 # For removing bugs. Found solution at https://stackoverflow.com/questions/64927909/failed-to-read-descriptor-from-node-connection-a-device-attached-to-the-system
 options = webdriver.ChromeOptions()
 options.add_experimental_option('excludeSwitches', ['enable-logging'])
+options.add_argument('--ignore-ssl-errors=yes')
+options.add_argument('--ignore-certificate-errors')
 
 
 
@@ -64,7 +68,7 @@ class ContactScraper:
         self.driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
 
         # Temporary CSV save file location for main file to append to while running through rows
-        self.tempSaveFileLocation = "../save/"
+        self.tempSaveFileLocation = CWD + "/../save/"
 
         self.vars = {}
         
@@ -82,10 +86,11 @@ class ContactScraper:
     def readFromExcel(self):
         print("Type in the name of the spreadsheet you want to domain check: \n")
 
-        print(os.listdir("../spreadsheets"))
+        print(os.listdir(CWD + "/../spreadsheets"))
 
         excel_file_name = input("File name: ")
-        self.excel_file_path = "../spreadsheets/" + excel_file_name
+        self.excel_file_path = CWD + "/../spreadsheets/" + excel_file_name
+        self.output_file_path = CWD + "/../spreadsheets/" + excel_file_name[0:-5] + " output.xlsx"
 
         self.df = pd.read_excel(self.excel_file_path)
 
@@ -108,15 +113,29 @@ class ContactScraper:
 
 
     def contactScraper(self):
+        partial_scrape = "Scrape" in self.df.columns
         staffPageList = []
         salesContactList = []
         staffContactList = []
-        cur = 1
+        cur = 0
         numRows = len(self.df.index)
         for index, row in self.df.iterrows():
-            
+            cur += 1
+
+            if partial_scrape and row['Scrape'] is False:
+                # print("Scrape option is set to FALSE, skipping dealership.")
+                staffPageList.append("SKIPPED")
+                salesContactList.append("SKIPPED")
+                staffContactList.append("SKIPPED")
+                continue
+            else:
+                print()
+                print("Page: ", cur, " / ", numRows)
+                print("{}\n{}".format(row['Name'], row['URL']))
+
             try:
                 url = row['URL'].lower()
+                row['URL'] = url
             except:
                 # In case URL is messed up
                 result['Sales'] = 'Check Manually.'
@@ -130,9 +149,8 @@ class ContactScraper:
                 continue
 
 
-            provider = str(row['Site Provider']).lower()
+            # provider = str(row['Site Provider']).lower()
             # print("Provider: "+ provider)
-            print("Page: ", cur, " / ", numRows)
             # if provider == 'dealer.com':
             #     result = scraper_dealerDotCom(self.driver, url)
             
@@ -170,7 +188,7 @@ class ContactScraper:
                 result['Sales'] = 'CAPTCHA ERROR'
                 result['Staff Contact'] = 'CAPTCHA ERROR'
                 
-            print(result)
+            # print(result)
             # After result is generated, save the row to a temporary save file in case of catastrophic faliure (program crashes midway through)
             self.saveRow(url, result['Staff Page'], result['Sales'], result['Staff Contact'])
 
@@ -179,7 +197,6 @@ class ContactScraper:
             salesContactList.append(result['Sales'])
             staffContactList.append(result['Staff Contact'])
 
-            cur += 1
 
         # Add new completed columns to dataframe
         self.df['Staff Page'] = staffPageList
@@ -188,8 +205,8 @@ class ContactScraper:
         return
     
     def saveToExcel(self):
-        print("Saving to excel file: " + self.excel_file_path)
-        writer = pd.ExcelWriter(self.excel_file_path)
+        print("Saving to excel file: " + self.output_file_path)
+        writer = pd.ExcelWriter(self.output_file_path)
         self.df.to_excel(writer)
         writer.save()
         return
