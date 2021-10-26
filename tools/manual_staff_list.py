@@ -22,7 +22,7 @@ Store No.   Dealership      Name            Title           Email           Phon
 (for multiple dealerships - convertToJSONStrings)
 
 Then, run this file and select your spreadsheet as an input.
-** Make sure to put that spreadsheet in /../Manual Staff Contacts beforehand
+** Make sure to put that spreadsheet in /../manuals_staff_contacts beforehand
 
 It will then output (or create a txt file) with string(s) in the correct format
 to input into the appropriate column(s) of the OEM input sheet.
@@ -45,17 +45,19 @@ import os
 
 CWD = os.path.dirname(os.path.realpath(__file__))
 
+FOLDER = "/../manual_staff_contacts"
+
 def readFromExcel():
         print("Type in the name of the spreadsheet you want to domain check: \n")
 
-        print(os.listdir(CWD + "/../Manual Staff Contacts"))
+        print(os.listdir(CWD + FOLDER))
 
         excel_file_name = input("File name: ")
-        excel_file_path = CWD + "/../Manual Staff Contacts/" + excel_file_name
+        excel_file_path = CWD + FOLDER + excel_file_name
 
         df = pd.read_excel(excel_file_path)
 
-        output_file_path = CWD + "/../Manual Staff Contacts/" + excel_file_name[:-5] + " output.txt"
+        output_file_path = CWD + FOLDER + excel_file_name[:-5] + " output.txt"
 
         print("File read into object dataframe from: " + excel_file_path)
         print()
